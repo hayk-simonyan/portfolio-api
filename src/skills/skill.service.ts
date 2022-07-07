@@ -25,7 +25,6 @@ export class SkillService {
   private groupSkillsByTag(skills: Skill[]): ISkillGroup {
     const groupByCategory = skills.reduce((group, skill) => {
       const { category } = skill;
-      console.log(skill);
       group[category] = group[category] ?? [];
       group[category].push(skill);
       return group;
