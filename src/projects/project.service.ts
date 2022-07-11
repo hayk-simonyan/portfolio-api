@@ -1,17 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Client } from '@notionhq/client';
-import { notionToObjectMapper } from 'src/utils/notion';
 import { Project } from './project.model';
-import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
+import { NotionService } from 'src/notion/notion.service';
 
 @Injectable()
 export class ProjectService {
-  private notionClient = new Client({ auth: process.env.NOTION_API_KEY });
   private projects: Project[] = [];
 
   async getProjects(): Promise<Project[]> {
-    const notionProjects = await this.getProjectsFromNotionDB();
-    this.projects = notionToObjectMapper<Project>(notionProjects);
+    this.projects = await new NotionService().getProjects<Project>();
     return [...this.projects];
   }
 
@@ -45,11 +41,5 @@ export class ProjectService {
     );
     this.projects.push(newProject);
     return newProject;
-  }
-
-  private async getProjectsFromNotionDB(): Promise<QueryDatabaseResponse> {
-    return await this.notionClient.databases.query({
-      database_id: process.env.NOTION_PROJECTS_DATABASE_ID,
-    });
   }
 }

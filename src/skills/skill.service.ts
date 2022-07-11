@@ -1,25 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Client } from '@notionhq/client';
-import { notionToObjectMapper } from 'src/utils/notion';
+import { NotionService } from 'src/notion/notion.service';
 import { ISkillGroup, Skill } from './skill.model';
 
 @Injectable()
 export class SkillService {
-  private notionClient = new Client({ auth: process.env.NOTION_API_KEY });
   private skills: Skill[] = [];
   private skillGroup: ISkillGroup = {};
 
   async getSkills(): Promise<ISkillGroup> {
-    const notionSkills = await this.getSkillsFromNotion();
-    this.skills = notionToObjectMapper<Skill>(notionSkills);
+    this.skills = await new NotionService().getSkills<Skill>();
     this.skillGroup = this.groupSkillsByTag(this.skills);
     return { ...this.skillGroup };
-  }
-
-  private async getSkillsFromNotion() {
-    return await this.notionClient.databases.query({
-      database_id: process.env.NOTION_SKILLS_DATABASE_ID,
-    });
   }
 
   private groupSkillsByTag(skills: Skill[]): ISkillGroup {
