@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { BioModule } from './bio/bio.module';
-import { BlogModule } from './blog/blog.module';
-import { ContactModule } from './contacts/contact.module';
-import { EducationModule } from './education/education.module';
-import { ExperienceModule } from './experience/experience.module';
-import { LanguageModule } from './languages/language.module';
-import { NotionService } from './notion/notion.service';
-import { ProjectModule } from './projects/project.module';
-import { SkillModule } from './skills/skill.module';
+import { BioModule } from './modules/bio/bio.module';
+import { BlogModule } from './modules/blog/blog.module';
+import { ContactModule } from './modules/contacts/contact.module';
+import { EducationModule } from './modules/education/education.module';
+import { ExperienceModule } from './modules/experience/experience.module';
+import { LanguageModule } from './modules/languages/language.module';
+import { ProjectModule } from './modules/projects/project.module';
+import { SkillModule } from './modules/skills/skill.module';
 
 @Module({
   imports: [
@@ -19,7 +18,6 @@ import { SkillModule } from './skills/skill.module';
     EducationModule,
     ExperienceModule,
     LanguageModule,
-    NotionService,
     ProjectModule,
     SkillModule,
   ],
