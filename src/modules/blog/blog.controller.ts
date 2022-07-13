@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
-import { MediumArticle } from './blog.model';
+
 import { BlogService } from './blog.service';
+import { MediumArticle } from './blog.model';
 
 @Controller('blog')
 export class BlogController {

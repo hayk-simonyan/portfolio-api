@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Project } from './project.model';
+
 import { NotionService } from 'src/notion/notion.service';
+import { Project } from './project.model';
 
 @Injectable()
 export class ProjectService {

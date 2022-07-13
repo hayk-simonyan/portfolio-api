@@ -1,6 +1,7 @@
+import { ISkillGroup, Skill } from './skill.model';
+
 import { Injectable } from '@nestjs/common';
 import { NotionService } from 'src/notion/notion.service';
-import { ISkillGroup, Skill } from './skill.model';
 
 @Injectable()
 export class SkillService {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { NotionService } from 'src/notion/notion.service';
 import { Language } from './language.model';
+import { NotionService } from 'src/notion/notion.service';
 
 @Injectable()
 export class LanguageService {

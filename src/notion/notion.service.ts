@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { Client } from '@notionhq/client';
+import { Injectable } from '@nestjs/common';
 import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 
 @Injectable()

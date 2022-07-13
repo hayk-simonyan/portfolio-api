@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+
 import { Education } from './education.model';
 import { EducationService } from './education.service';
 

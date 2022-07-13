@@ -1,6 +1,7 @@
+import { BaseMediumApiResponse, MediumArticle } from './blog.model';
+
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { MediumArticle, BaseMediumApiResponse } from './blog.model';
 
 @Injectable()
 export class BlogService {
@@ -10,7 +11,6 @@ export class BlogService {
 
   async getArticles(): Promise<MediumArticle[]> {
     this.articles = await (await this.fetchMediumArticles()).data.items;
-    console.log(await this.fetchMediumArticles());
     return [...this.articles];
   }
 

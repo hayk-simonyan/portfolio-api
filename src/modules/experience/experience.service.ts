@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { Experience } from './experience.model';
+import { Injectable } from '@nestjs/common';
 import { NotionService } from 'src/notion/notion.service';
 
 @Injectable()
