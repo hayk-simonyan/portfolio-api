@@ -16,6 +16,7 @@ export class NotionService {
   public async getContacts<T>(): Promise<T[]> {
     const contacts = await this.notionClient.databases.query({
       database_id: process.env.NOTION_CONTACTS_DATABASE_ID,
+      sorts: [{ property: 'name', direction: 'descending' }],
     });
     return this.notionToObjectMapper<T>(contacts);
   }
