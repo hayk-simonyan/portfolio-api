@@ -23,6 +23,7 @@ export class NotionService {
   public async getEducation<T>(): Promise<T[]> {
     const education = await this.notionClient.databases.query({
       database_id: process.env.NOTION_EDUCATION_DATABASE_ID,
+      sorts: [{ property: 'dates', direction: 'descending' }],
     });
     return this.notionToObjectMapper<T>(education);
   }
