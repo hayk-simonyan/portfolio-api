@@ -39,6 +39,7 @@ export class NotionService {
   public async getLanguages<T>(): Promise<T[]> {
     const languages = await this.notionClient.databases.query({
       database_id: process.env.NOTION_LANGUAGES_DATABASE_ID,
+      sorts: [{ property: 'language', direction: 'ascending' }],
     });
     return this.notionToObjectMapper<T>(languages);
   }
