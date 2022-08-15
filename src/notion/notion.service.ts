@@ -30,6 +30,7 @@ export class NotionService {
   public async getExperience<T>(): Promise<T[]> {
     const experience = await this.notionClient.databases.query({
       database_id: process.env.NOTION_EXPERIENCE_DATABASE_ID,
+      sorts: [{ property: 'dates', direction: 'descending' }],
     });
     return this.notionToObjectMapper<T>(experience);
   }
