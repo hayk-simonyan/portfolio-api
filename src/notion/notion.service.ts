@@ -61,11 +61,18 @@ export class NotionService {
     response.results.forEach((result: any) => {
       const object = new Object({ id: result.id });
       const properties = result.properties;
+
+      if (result.icon) {
+        object['icon'] = result.icon[result.icon.type];
+      }
+
       Object.keys(properties).forEach((property: any) => {
         const type = properties[property].type;
         const column = properties[property][type]
           ? properties[property][type][0]
           : null;
+
+        // console.log(properties[property][type]);
 
         switch (type) {
           case 'date':

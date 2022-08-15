@@ -9,5 +9,6 @@ export class Experience {
       end: string;
       timezone: string;
     },
+    public icon?: string | { url: string },
   ) {}
 }
