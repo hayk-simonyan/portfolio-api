@@ -48,6 +48,7 @@ export class NotionService {
   public async getProjects<T>(): Promise<T[]> {
     const projects = await this.notionClient.databases.query({
       database_id: process.env.NOTION_PROJECTS_DATABASE_ID,
+      sorts: [{ property: 'dates', direction: 'descending' }],
     });
     return this.notionToObjectMapper<T>(projects);
   }
