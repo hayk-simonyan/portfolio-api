@@ -56,6 +56,7 @@ export class NotionService {
   public async getSkills<T>(): Promise<T[]> {
     const skills = await this.notionClient.databases.query({
       database_id: process.env.NOTION_SKILLS_DATABASE_ID,
+      sorts: [{ property: 'category', direction: 'ascending' }],
     });
     return this.notionToObjectMapper<T>(skills);
   }
