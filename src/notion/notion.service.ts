@@ -1,6 +1,10 @@
+import {
+  GetPageResponse,
+  QueryDatabaseResponse,
+} from '@notionhq/client/build/src/api-endpoints';
+
 import { Client } from '@notionhq/client';
 import { Injectable } from '@nestjs/common';
-import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 
 @Injectable()
 export class NotionService {
@@ -53,12 +57,25 @@ export class NotionService {
     return this.notionToObjectMapper<T>(projects);
   }
 
+  public async getProject<T>(id: string): Promise<T> {
+    const project = await this.notionClient.pages.retrieve({ page_id: id });
+    return this.notionToProjectMapper<T>(project);
+  }
+
   public async getSkills<T>(): Promise<T[]> {
     const skills = await this.notionClient.databases.query({
       database_id: process.env.NOTION_SKILLS_DATABASE_ID,
       sorts: [{ property: 'category', direction: 'ascending' }],
     });
     return this.notionToObjectMapper<T>(skills);
+  }
+
+  private notionToProjectMapper<T>(response: GetPageResponse): T {
+    const object = new Object({ id: response.id });
+    const properties = (response as any).properties;
+    const project = this.propertiesToObjectMapper(properties, object);
+
+    return project;
   }
 
   private notionToObjectMapper<T>(response: QueryDatabaseResponse): T[] {
@@ -71,31 +88,35 @@ export class NotionService {
         object['icon'] = result.icon[result.icon.type];
       }
 
-      Object.keys(properties).forEach((property: any) => {
-        const type = properties[property].type;
-        const column = properties[property][type]
-          ? properties[property][type][0]
-          : null;
-
-        // console.log(properties[property][type]);
-
-        switch (type) {
-          case 'date':
-            object[property] = properties[property][type];
-            break;
-          case 'url':
-            object[property] = properties[property][type];
-            break;
-          case 'multi_select':
-            object[property] = column?.name;
-            break;
-          default:
-            object[property] = column?.plain_text;
-        }
-      });
-      objects.push(object);
+      const mappedObject = this.propertiesToObjectMapper(properties, object);
+      objects.push(mappedObject);
     });
     return objects as any;
+  }
+
+  private propertiesToObjectMapper(properties, object) {
+    Object.keys(properties).forEach((property: any) => {
+      const type = properties[property].type;
+      const column = properties[property][type]
+        ? properties[property][type][0]
+        : null;
+
+      switch (type) {
+        case 'date':
+          object[property] = properties[property][type];
+          break;
+        case 'url':
+          object[property] = properties[property][type];
+          break;
+        case 'multi_select':
+          object[property] = column?.name;
+          break;
+        default:
+          object[property] = column?.plain_text;
+      }
+    });
+
+    return object;
   }
 
   private notionBlockParser(response): string {

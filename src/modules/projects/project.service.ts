@@ -13,7 +13,7 @@ export class ProjectService {
   }
 
   async getProject(id: string): Promise<Project> {
-    const project = this.projects.find((project) => project.id === id);
+    const project = await new NotionService().getProject<Project>(id);
     if (!project) {
       throw new NotFoundException();
     }
