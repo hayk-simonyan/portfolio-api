@@ -19,28 +19,4 @@ export class ProjectService {
     }
     return { ...project };
   }
-
-  async insertProject(
-    id: string,
-    title: string,
-    description: string[],
-    techStack: string[],
-    dates: string[],
-    url?: string,
-    sourceCode?: string,
-    imageUrl?: string,
-  ): Promise<Project> {
-    const newProject = new Project(
-      id,
-      title,
-      description,
-      techStack,
-      dates,
-      url,
-      sourceCode,
-      imageUrl,
-    );
-    this.projects.push(newProject);
-    return newProject;
-  }
 }

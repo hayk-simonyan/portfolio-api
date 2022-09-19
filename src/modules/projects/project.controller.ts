@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { Project } from './project.model';
 import { ProjectService } from './project.service';
@@ -15,28 +15,5 @@ export class ProjectController {
   @Get(':id')
   getProject(@Param('id') id: string): Promise<Project> {
     return this.projectService.getProject(id);
-  }
-
-  @Post()
-  postProject(
-    @Body('id') id: string,
-    @Body('title') title: string,
-    @Body('description') description: string[],
-    @Body('techStack') techStack: string[],
-    @Body('dates') dates: string[],
-    @Body('url') url?: string,
-    @Body('sourceCode') sourceCode?: string,
-    @Body('imageUrl') imageUrl?: string,
-  ): Promise<Project> {
-    return this.projectService.insertProject(
-      id,
-      title,
-      description,
-      techStack,
-      dates,
-      url,
-      sourceCode,
-      imageUrl,
-    );
   }
 }
