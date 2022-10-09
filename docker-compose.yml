@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     env_file: .env
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+      - $PORT:$NODE_DOCKER_PORT
     environment:
       - MEDIUM_API=$MEDIUM_API
       - NOTION_API_KEY=$NOTION_API_KEY
